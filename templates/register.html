@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="{{ url_for('static', filename='css/background.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+        <h1>회원가입</h1>
+            <form method="POST" >   
+                {{form.csrf_token}}
+                <div class="form-group">
+                    {{form.userEmail.label("이메일")}}
+                    {{form.userEmail(class="form-control", placeholder="이메일")}}
+                </div>
+                <div class="form-group">
+                    {{form.userName.label("사용자 이름")}}
+                    {{form.userName(class="form-control", placeholder="사용자 이름")}}
+                </div>
+                <div class="form-group">
+                    {{form.password.label("비밀번호")}}
+                    {{form.password(class="form-control", placeholder="비밀번호")}}
+                </div>
+                <div class="form-group">
+                    {{form.rePassword.label("비밀번호 확인")}}
+                    {{form.rePassword(class="form-control", placeholder="비밀번호 확인")}}
+                </div>
+                <button type="submit" class="btn btn-primary">제출</button>
+            </form>
+            <script src="{{ url_for('static', filename='js/background.js') }}" > </script>
+
+</body>
+</html>

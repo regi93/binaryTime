@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
+    <title>HOME</title>
+    <link href="{{ url_for('static', filename='css/background.css') }}" rel="stylesheet">
+
 </head>
 <body>
-    <div></div>
+    <div class="clock">
+        <h1>Time</h1>
+    </div>
+    <div class="js-weather"></div>
+
+
+    <script src="{{ url_for('static', filename='js/clock.js') }}" > </script>
+    <script src="{{ url_for('static', filename='js/background.js') }}" > </script>
+        
 </body>
 </html>
