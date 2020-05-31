@@ -26,3 +26,16 @@ body{
     margin-top:20%;
     text-align: center;
 }
+input{
+    color : white;
+    font-weight: bold;
+    font-size: 100%;
+    margin-left: 25%;
+    background-color: transparent;
+    text-align: center;
+    height: 100%;
+    width: 50%;
+    padding:20px;
+    border : 0;
+    border-bottom: 2px solid #fff;
+}

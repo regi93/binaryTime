@@ -17,4 +17,5 @@ function init() {
 }
 init();
 
-console.log("왜 이건 저장아 된거같은데 적용이 안돼냐")
+
+console.log("돼냐이번엔")

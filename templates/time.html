@@ -11,12 +11,21 @@
     <div class="clock">
         <h1>Time</h1>
     </div>
-    <div class="js-weather"></div>
-    <h2><a href="/register">GO</a></h2>
+    <form method="post">
 
-    <script src="{{ url_for('static', filename='clock.js') }}" > </script>
+    <button onclick="plus()">+</button>
+
+    <button onclick="minus()">-</button>
+    </form>
     <script src="{{ url_for('static', filename='background.js') }}" > </script>
+    <script src="{{ url_for('static', filename='clock.js') }}" > </script>
+    <script>
+    function plus(){
+        
+    }
+    function minus(){
 
-    
+    }
+    </script>
 </body>
 </html>
