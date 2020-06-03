@@ -1,13 +1,28 @@
 import os
-from flask import Flask , request , redirect , render_template
+from flask import Flask , request , redirect , render_template, session
 from models import Myuser ,db , TimeCheck
 from flask_wtf.csrf import CSRFProtect
-from forms import RegisterForm
+from forms import RegisterForm , LoginForm
 import datetime
 
 
+date , time = str(datetime.datetime.now()).split()
+year ,month, day = date.split("-")
+hour , minute , second = time[:8].split(":") 
+
+print(year, month, day)
+data = "%s-%s-%s"%(year,month,second)
+
 app = Flask(__name__)
 
+@app.route('/time' , methods=['GET','POST','DELETE','PUT'])
+def time():
+    time = TimeCheck()
+    if request.method == 'PUT':
+        userEmail = session.get('userEmail',None)
+        print(request.get_json["startTime"])
+        return jsonify({'result': 'success', 'msg': 'Time Start'})
+    return render_template('time.html', data = data)
 
 @app.route('/register', methods=['GET','POST'])
 def register():   
@@ -23,14 +38,24 @@ def register():
             
     return render_template('register.html', form=form)
 
+@app.route('/login',methods=["POST","GET"])
+def login():
+    form = LoginForm() 
+    if form.validate_on_submit(): 
+        session['userEmail'] = form.data.get('userEmail') 
+    
+        return redirect('/') 
+    return render_template('login.html', form=form)
+
 @app.route('/')
 def hello():
-    return render_template('index.html' , date = printDate)   
+    userEmail = session['userEmail']
+    if userEmail:
+        myuser= Myuser()
+        myuser = Myuser.query.filter_by(userEmail = userEmail).first()
+        userName = myuser.userName
+    return render_template('index.html', userName=userName)
 
-@app.route('/time')
-def time():
-    
-    return render_template('time.html')
 
 if __name__ == "__main__":
     basedir = os.path.abspath(os.path.dirname(__file__)) 
@@ -46,6 +71,3 @@ if __name__ == "__main__":
     db.create_all()  
     app.run(host='127.0.0.1', port=5000, debug=True) 
 
-
-now = datetime.datetime.now()
-print(now)

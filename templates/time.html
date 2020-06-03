@@ -4,28 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME</title>
-    <link href="{{ url_for('static', filename='css/background.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link href="{{ url_for('static', filename='background.css') }}" rel="stylesheet">
 
 </head>
 <body>
     <div class="clock">
         <h1>Time</h1>
     </div>
-    <form method="post">
+    <h1>{{ data }}</h1>
 
-    <button onclick="plus()">+</button>
-
-    <button onclick="minus()">-</button>
-    </form>
+    <button class = "plusButton" onclick="plus()">+</button>
+    <button class = "zeroButton" onclick="zero()">Zero</button>
+    <button class = "minusButton" onclick="minus()">-</button>
+    
     <script src="{{ url_for('static', filename='background.js') }}" > </script>
     <script src="{{ url_for('static', filename='clock.js') }}" > </script>
-    <script>
-    function plus(){
-        
-    }
-    function minus(){
+    <script src="{{ url_for('static', filename='timeButton.js') }}" > </script>
 
-    }
-    </script>
 </body>
 </html>

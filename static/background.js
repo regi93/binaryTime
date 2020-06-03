@@ -17,5 +17,3 @@ function init() {
 }
 init();
 
-
-console.log("돼냐이번엔")

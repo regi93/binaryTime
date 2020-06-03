@@ -15,15 +15,17 @@
     z-index: -1;
     animation: fadeIn 2s ;
 }
-
+.form-control{
+    text-align: center;
+}
 body{
     background-color: #636e72;
-    font-size: 2em;
-    color : white;
+    font-family:-apple-system,BlinkMacSystemFont
 }
 .clock{
-    font-size: 2em;
+    font-size: 6em;
     margin-top:20%;
+    color : #fff;
     text-align: center;
 }
 input{
@@ -38,4 +40,10 @@ input{
     padding:20px;
     border : 0;
     border-bottom: 2px solid #fff;
+}
+h2{
+    font-size: 3em;
+    color :#fff;
+    text-align: center;
+    font-weight: 500;
 }
