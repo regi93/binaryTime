@@ -1,28 +1,25 @@
 import os
-from flask import Flask , request , redirect , render_template, session
+from flask import Flask , request , redirect , render_template, session, jsonify
 from models import Myuser ,db , TimeCheck
-from flask_wtf.csrf import CSRFProtect
 from forms import RegisterForm , LoginForm
-import datetime
+from api_v1 import api as api_v1
 
-
-date , time = str(datetime.datetime.now()).split()
-year ,month, day = date.split("-")
-hour , minute , second = time[:8].split(":") 
-
-print(year, month, day)
-data = "%s-%s-%s"%(year,month,second)
+# import datetime
+# from flask_wtf.csrf import CSRFProtect 
+# date , time = str(datetime.datetime.now()).split()
+# year ,month, day = date.split("-")
+# hour , minute , second = time[:8].split(":") 
+# print(year, month, day)
+# data = "%s-%s-%s"%(year,month,second)
 
 app = Flask(__name__)
+app.register_blueprint(api_v1 , url_prefix='/api/v1')
 
-@app.route('/time' , methods=['GET','POST','DELETE','PUT'])
+
+
+@app.route('/time')
 def time():
-    time = TimeCheck()
-    if request.method == 'PUT':
-        userEmail = session.get('userEmail',None)
-        print(request.get_json["startTime"])
-        return jsonify({'result': 'success', 'msg': 'Time Start'})
-    return render_template('time.html', data = data)
+    return render_template('time.html')
 
 @app.route('/register', methods=['GET','POST'])
 def register():   
@@ -34,7 +31,7 @@ def register():
         myuser.password = form.data.get('password')
         db.session.add(myuser)  
         db.session.commit()  
-        return "가입 완료"
+        return "register Success"
             
     return render_template('register.html', form=form)
 
@@ -64,8 +61,8 @@ if __name__ == "__main__":
     app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
     app.config['SECRET_KEY'] = 'this is SEcret Key'
-    csrf = CSRFProtect()
-    csrf.init_app(app)
+    # csrf = CSRFProtect()  얘네때매 ajax안되느듯
+    # csrf.init_app(app)
     db.init_app(app)
     db.app = app
     db.create_all()  

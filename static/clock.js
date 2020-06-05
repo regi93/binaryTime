@@ -1,3 +1,4 @@
+
 const clockContainer = document.querySelector(".clock"),
     clockTitle = clockContainer.querySelector("h1");
 
