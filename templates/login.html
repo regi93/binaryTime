@@ -15,6 +15,10 @@
             {{form.password(class="form-control", placeholder="비밀번호")}}
         </div>
         <button type="submit">로그인</button>
+
+        {% if form.password.errors %}
+        <strong>{{form.password.errors.0}}</strong>
+        {%endif%}
 </form>
 </body>
 </html>

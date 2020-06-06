@@ -18,12 +18,22 @@
 
 </head>
 <body>
+    <script>          // CSRF _ AJAX
+        var csrf_token = "{{ csrf_token() }}";
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrf_token);
+        }
+    }
+});
+    </script>
     <div class="clock">
         <h1>Time</h1>
     </div>
-    <button class = "plusButton" onclick="plus()">+</button>
-    <button class = "zeroButton" onclick="zero()">Zero</button>
-    <button class = "minusButton" onclick="minus()">-</button>
+    <button class = "+btn" onclick="plus()">+</button>
+    <button class = "0btn" onclick="zero()">Zero</button>
+    <button class = "-btn" onclick="minus()">-</button>
 
     
     <script src="{{ url_for('static', filename='background.js') }}" > </script>

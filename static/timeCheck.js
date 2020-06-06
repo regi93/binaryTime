@@ -1,19 +1,22 @@
 $(document).ready(function () {
     listing();
 });
-
+const mBtn = document.querySelector('.-btn');
+mBtn.innerText = "start -Time"
 function listing() {
     
 }
 
 function zero(){
+    let nowDate = new Date().toLocaleDateString();
+    let nowTime = new Date().toTimeString();
 
     $.ajax({
-        type: 'PUT',
+        type: 'POST',
         url: '/api/v1/timecheck',
         data: {
             timeType: 'zero',
-            timeStamp: new Date()
+            nowTime: now
         },
         success: function (response) {
             if (response['result'] == 'success') {
@@ -22,13 +25,17 @@ function zero(){
             } 
     })
 }
-function plus(){
+function plus() {
+    
+    let nowDate = new Date().toLocaleDateString();
+    let nowTime = new Date().toTimeString();
     $.ajax({
         type: 'POST',
         url: '/api/v1/timecheck',
         data: {
-            timeType: 'plus',
-            timeStamp: new Date()
+            timeType: '+',
+            nowDate: nowDate,
+            nowTime : nowTime
         },
         success: function (response) {
             if (response['result'] == 'success') {
@@ -38,19 +45,33 @@ function plus(){
     })
 }
 function minus() {
+    let nowDate = new Date().toLocaleDateString();
+    let nowTime = new Date().toTimeString();
+    let status;
+    if (mBtn.innerText = "start -Time") {
+        status = 'start'
+    } else {
+        mBtn.innerText = 'end -Time';
+        status = 'end'
+    }
     $.ajax({
-        type: 'PUT',
+        type: 'POST',
         url: '/api/v1/timecheck',
         data: {
-            timeType: 'minus',
-            timeStamp: new Date()
+            timeType: '-',
+            nowDate: nowDate,
+            nowTime : nowTime,
+            status : status 
             },
                 success: function(response) {
                     if (response['result'] == 'success') {
                         alert(response['msg']);
+                        console.log(status);
                 }
         }
     });
+    
+    
 }
 
 
