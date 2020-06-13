@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The color of time</title>
-    <link href="{{ url_for('static', filename='background.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">
     
 </head>
 <body>
-    <div class="clock">
+    <div class="js-clock">
         <h1>Time</h1>
     </div>
     <div class="js-weather"></div>
     {%if userName%}
     <h2> Trust your self, {{userName}}</h2> 
     {%endif%}
-    <h2><a href="/register">GO</a></h2>
+    <h2><a href="/time">GO</a></h2>
 
     <script src="{{ url_for('static', filename='clock.js') }}" > </script>
     <script src="{{ url_for('static', filename='background.js') }}" > </script>

@@ -1,3 +1,11 @@
+
+.form.greetings{
+    display : none;
+}
+
+.showing{
+    display : block;
+}
 @keyframes fadeIn{
     from{
         opacity: 0;
@@ -15,17 +23,15 @@
     z-index: -1;
     animation: fadeIn 2s ;
 }
-.form-control{
-    text-align: center;
-}
+
 body{
     background-color: #636e72;
-    font-family:-apple-system,BlinkMacSystemFont
+    font-size: 2em;
+    color : white;
 }
-.clock{
-    font-size: 6em;
+.js-clock{
+    font-size: 2em;
     margin-top:20%;
-    color : #fff;
     text-align: center;
 }
 input{
@@ -41,9 +47,7 @@ input{
     border : 0;
     border-bottom: 2px solid #fff;
 }
-h2{
-    font-size: 3em;
-    color :#fff;
+#question{
     text-align: center;
-    font-weight: 500;
+    font-size: 1.5em;
 }

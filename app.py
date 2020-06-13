@@ -5,19 +5,8 @@ from forms import RegisterForm , LoginForm
 from models import db , MyUser
 from api_v1 import api as api_v1
 
-# from models import Myuser ,db , TimeCheck
-
-# import datetime
-# date , time = str(datetime.datetime.now()).split()
-# year ,month, day = date.split("-")
-# hour , minute , second = time[:8].split(":") 
-# print(year, month, day)
-# data = "%s-%s-%s"%(year,month,second)
-
 app = Flask(__name__)
 app.register_blueprint(api_v1 , url_prefix='/api/v1')
-
-
 
 @app.route('/time')
 def time():
@@ -35,10 +24,11 @@ def register():
             'userName': userName ,
             'password' : password
         }
-        db.userInfo.insert_one(userInfo)
-        # db.session.add(myuser)  
-        # db.session.commit()  
-        return "register Success"
+        if MyUser.login(userEmail) == 'Wrong Email':
+            db.userInfo.insert_one(userInfo)
+            return "register Success"
+        else : 
+            return "중복된 이메일입니다."
             
     return render_template('register.html', form=form)
 
@@ -53,26 +43,18 @@ def login():
 
 @app.route('/')
 def hello():
-    
-    if session['userEmail']:
-        userEmail = session['userEmail']
+    userEmail = session.get('userEmail', None)
+    if userEmail:
         userName = MyUser.login(userEmail)[1]
-    # return render_template('index.html', userName=userName)
         return render_template('index.html',userName = userName)
     return "do login"
 
+@app.route('/chart')
+def chart():
+    return render_template('chart.html')
 
 if __name__ == "__main__":
-    # basedir = os.path.abspath(os.path.dirname(__file__)) 
-    # dbfile = os.path.join(basedir, 'db.sqlite')
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + dbfile   
-    # app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True 
-    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
     app.config['SECRET_KEY'] = 'this is SEcret Key'
     csrf = CSRFProtect() 
     csrf.init_app(app)
-    # db.init_app(app)
-    # db.app = app
-    # db.create_all()  
-    app.run(host='127.0.0.1', port=5000, debug=True) 
-
+    app.run(host='127.0.0.1', port=5000, debug=True)

@@ -1,77 +1,77 @@
-$(document).ready(function () {
-    listing();
-});
-const mBtn = document.querySelector('.-btn');
-mBtn.innerText = "start -Time"
-function listing() {
-    
-}
+// window.onload;
 
-function zero(){
-    let nowDate = new Date().toLocaleDateString();
-    let nowTime = new Date().toTimeString();
+const Pbtn = document.querySelector('#Pbtn'),
+    Mbtn = document.querySelector('#Mbtn');
 
-    $.ajax({
-        type: 'POST',
-        url: '/api/v1/timecheck',
-        data: {
-            timeType: 'zero',
-            nowTime: now
-        },
-        success: function (response) {
-            if (response['result'] == 'success') {
-                alert(response['msg']);
-                }
-            } 
-    })
-}
+
 function plus() {
-    
-    let nowDate = new Date().toLocaleDateString();
-    let nowTime = new Date().toTimeString();
-    $.ajax({
-        type: 'POST',
-        url: '/api/v1/timecheck',
-        data: {
-            timeType: '+',
-            nowDate: nowDate,
-            nowTime : nowTime
-        },
-        success: function (response) {
-            if (response['result'] == 'success') {
-                alert(response['msg']);
+    if (Pbtn.innerText == "Start PlusTime") {
+        Pbtn.innerText = 'End PlusTime';
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/plustime",
+            data: {
+                Time: new Date(),
+                timeType : '+ Start'
+                },
+            success:function(response){
+                if (response['result'] == 'success') {
+                    alert(response['msg']);
                 }
-            } 
-    })
-}
-function minus() {
-    let nowDate = new Date().toLocaleDateString();
-    let nowTime = new Date().toTimeString();
-    let status;
-    if (mBtn.innerText = "start -Time") {
-        status = 'start'
+            }
+        })
+        
     } else {
-        mBtn.innerText = 'end -Time';
-        status = 'end'
-    }
-    $.ajax({
-        type: 'POST',
-        url: '/api/v1/timecheck',
-        data: {
-            timeType: '-',
-            nowDate: nowDate,
-            nowTime : nowTime,
-            status : status 
-            },
-                success: function(response) {
-                    if (response['result'] == 'success') {
-                        alert(response['msg']);
-                        console.log(status);
+        Pbtn.innerText = 'Start PlusTime';
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/plustime",
+            data: {
+                Time : new Date(),
+                timeType : '+ End'
+        },
+            success:function(response){
+                if (response['result'] == 'success') {
+                    alert(response['msg']);
                 }
-        }
-    });
-    
-    
+            }
+        })
+    }
 }
 
+function minus() {
+    if (Mbtn.innerText == "Start MinusTime") {
+        Mbtn.innerText = 'End MinusTime';
+        
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/minustime",
+            data: {
+                startTime: new Date(),
+                timeType : '- Start'
 
+        },
+            success:function(response){
+                if (response['result'] == 'success') {
+                    alert(response['msg']);
+                }
+            }
+        })
+    } else {
+        Mbtn.innerText = 'Start MinusTime';
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/minustime",
+            data: {
+                startTime: new Date(),
+                timeType : '- End'
+
+        },
+            success:function(response){
+                if (response['result'] == 'success') {
+                    alert(response['msg']);
+                }
+            }
+        })
+    }
+}

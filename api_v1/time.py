@@ -1,43 +1,32 @@
 from . import api
 from flask import jsonify, request, Blueprint, session, redirect
-from models import db , MyUser , TimeCheck
-
-# import requests
-# from models import Myuser , TimeCheck, db
+from models import db , MyUser , TimeClass
+import requests
 
 
-@api.route('/timecheck' , methods=["GET", "POST", "PUT", "DELETE"])
-def timeCheck():
-
+@api.route('/plustime' , methods=["GET", "POST"])
+def plustime():
     if request.method == "POST":
         timeType = request.form['timeType']
-        if timeType == '-':
-            # nowDate = request.form['nowDate'][:-1]
-            # timeType = request.form['timeType']
-            # nowTime= request.form['nowTime'][:8]
-            # status = request.form['status']
-
-            # print(nowDate, nowTime, timeType, status)
-            # print(request.form)
-            userEmail = session['userEmail']
-            TimeCheck.timePacking(userEmail , request.form)
-        return jsonify({'result':'success','msg':'POSTsuccess'})
+        time = request.form['Time']
+        userEmail = session['userEmail']
+        timeClass = TimeClass
+        timeClass.splitTime(userEmail , time, timeType)
+        if 'Start' in timeType :
+            return jsonify({'result':'success','msg':'PlusTime 시작'})
+        elif 'End' in timeType :
+            return jsonify({'result':'success','msg':'PlusTime 끝'})
 
 
-    elif request.method == "":
-        
-        return jsonify({'result':'success', 'msg':'PUTSuccess'})
-        
-
-            
-    elif request.method == "GET":
-        return jsonify({'result': 'success', 'msg': 'GETsuccess'})
-            
-
-
-
-# myuser_id
-# time_type
-# whatTime
-# startEnd
-# timeStamp
+@api.route('/minustime' , methods=["GET", "POST"])
+def minustime():
+    if request.method == "POST":
+        timeType = request.form['timeType']
+        if 'Start' in timeType :
+            return jsonify({'result':'success','msg':'minusTime 시작'})
+        elif 'End' in timeType :
+            return jsonify({'result':'success','msg':'minusTime 끝'})
+    
+@api.route('/chart' , methods = ["GET", "POST"])
+def chart():
+    pass
