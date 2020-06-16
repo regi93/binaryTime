@@ -1,3 +1,19 @@
+let Minus=0, Plus=0, Zero=0, Rest=0;
+$.ajax({
+    type: "GET",
+    url: "/api/v1/chart",
+    data: {},
+    success:function(response){
+        if (response['result'] == 'success') {
+            alert(response['msg']);
+            Plus = parseFloat(response['timeInfo'][0])
+            Minus = response['timeInfo'][1]
+            Zero = parseFloat(response['timeInfo'][2])
+            Rest = parseFloat(response['timeInfo'][3])
+        }
+    }
+})
+
 var ctx = document.getElementById('myChart').getContext('2d');
 var ctx = document.getElementById('myChart');
 var myChart = new Chart(ctx, {
@@ -6,7 +22,9 @@ var myChart = new Chart(ctx, {
         labels: ['Minus', 'Plus', 'Zero' , 'Rest of day'],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3 , 6],
+            // data: [Minus, Plus, Zero, Rest],
+            data: [5, Plus, Zero, Rest],
+
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

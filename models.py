@@ -15,8 +15,8 @@ class MyUser:
 
 
 
-class TimeClass:
-    def splitTime(userEmail , time , timeType):
+class SaveTime:
+    def saveTime(userEmail , time , timeType):
         dayOfWeek,month,day,year,nowTime = time[:24].split()
         packedTime = {
             'userEmail' : userEmail,
@@ -28,9 +28,9 @@ class TimeClass:
         }
         if 'Start' in timeType:
             packedTime['startTime'] = nowTime
-            TimeClass.startTime(packedTime)
+            SaveTime.startTime(packedTime)
         elif 'End' in timeType:
-            TimeClass.endTime(userEmail,nowTime)
+            SaveTime.endTime(userEmail,nowTime,timeType)
 
     def startTime(packedTime):
         if '+' in packedTime['timeType']:
@@ -38,14 +38,25 @@ class TimeClass:
         elif '-' in packedTime['timeType']:
             db.minus.insert_one(packedTime)
 
-    def endTime(userEmail,nowTime):
-        packedTime = dict(db.plus.find_one({'userEmail':userEmail}))
-        startTime = packedTime['startTime']
-        endTime = nowTime
-        packedTime['endTime'] = endTime
-        if '+' in packedTime['timeType']:
-            packedTime['duration'] = TimeClass.tdelta(startTime,endTime)
-            db.plus.update_one({'userEmail':userEmail},{"$set": packedTime})
+    def endTime(userEmail,nowTime,timeType):
+        if '+' in timeType:
+            # packedTime = dict(db.plus.find_one({'userEmail':userEmail}))
+            packedTime = dict(db.plus.find_one({ '$and': [ { 'userEmail' : userEmail }, { 'duration':{'$exists' : 0 }} ] }, {'_id' : 0}))
+            print('packedTime:' , packedTime)
+            startTime = packedTime['startTime']
+            endTime = nowTime
+            packedTime['endTime'] = endTime
+            packedTime['duration'] = SaveTime.tdelta(startTime,endTime)
+            db.plus.update_one({ '$and': [ {'userEmail':userEmail }, {'duration' :{'$exists' : 0}} ] } , {"$set": packedTime})
+        elif '-' in timeType:
+            packedTime = dict(db.minus.find_one({ '$and': [ { 'userEmail' : userEmail }, { 'duration':{'$exists' : 0 }} ] }))
+            startTime = packedTime['startTime']
+            endTime = nowTime
+            packedTime['endTime'] = endTime
+            packedTime['duration'] = SaveTime.tdelta(startTime,endTime)
+            # db.minus.update_one({'userEmail':userEmail},{"$set": packedTime})    
+            db.minus.update_one({ '$and':[{'userEmail':userEmail }, {'duration' :{'$exists' : 0}} ] },{"$set": packedTime})
+
 
     def tdelta(startTime, endTime):
         tdelta = datetime.strptime(endTime, '%H:%M:%S') - datetime.strptime(startTime, '%H:%M:%S')
@@ -54,8 +65,34 @@ class TimeClass:
 
         return str(tdelta)
 
+class LoadTime():
+    def loadDay(userEmail , month, day):
+        loadPlus = list(db.plus.find({'$and' : [{'userEmail':userEmail},{'month' : month},{'day':day} ]} , {'_id':0}))
+        sumPlus = 0
+        for i in loadPlus:
+            h , m , s = i['duration'].split(':')
+            sumPlus += int(h)
+            sumPlus += float(m)/60
+            sumPlus +=  float(s)/3600
+                
+#60초 1분 
+        restOfTime = 24
+        loadMinus = list(db.minus.find({'$and' : [{'userEmail':userEmail},{'month' : month},{'day':day} ]} , {'_id':0}))
+        sumMinus = 0
+        for i in loadMinus:
+            h , m , s = i['duration'].split(':')
+            sumMinus += int(h)
+            sumMinus += float(m)/60
+            sumMinus +=  float(s)/3600
+        
+        zeroTime = 9
+        restOfTime -= (sumMinus + sumPlus + zeroTime)
+        return sumPlus , sumMinus , zeroTime , restOfTime
+        
 
 
+
+# db.getCollection('minus').find({ $and: [ { userEmail : 'abc@abc.com' }, { duration:{$exists: true }} ] })
 # 필요한 기능
 # 1. ajax-start 받아온 데이터 db로 저장 / 요일 
 # 2. ajax - End 가 들어오면, 총 몇시간 몇분인지 계산하여 db 수정

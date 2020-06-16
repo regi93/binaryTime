@@ -1,6 +1,6 @@
 from . import api
-from flask import jsonify, request, Blueprint, session, redirect
-from models import db , MyUser , TimeClass
+from flask import jsonify, request, Blueprint, session, redirect ,flash
+from models import db , MyUser , SaveTime , LoadTime
 import requests
 
 
@@ -10,8 +10,8 @@ def plustime():
         timeType = request.form['timeType']
         time = request.form['Time']
         userEmail = session['userEmail']
-        timeClass = TimeClass
-        timeClass.splitTime(userEmail , time, timeType)
+        save = SaveTime
+        save.saveTime(userEmail , time, timeType)
         if 'Start' in timeType :
             return jsonify({'result':'success','msg':'PlusTime 시작'})
         elif 'End' in timeType :
@@ -22,11 +22,22 @@ def plustime():
 def minustime():
     if request.method == "POST":
         timeType = request.form['timeType']
+        time = request.form['Time']
+        userEmail = session['userEmail']
+        save = SaveTime
+        save.saveTime(userEmail , time, timeType)
         if 'Start' in timeType :
-            return jsonify({'result':'success','msg':'minusTime 시작'})
+            return jsonify({'result':'success','msg':'MinusTime 시작'})
         elif 'End' in timeType :
-            return jsonify({'result':'success','msg':'minusTime 끝'})
-    
+            return jsonify({'result':'success','msg':'MinusTime 끝'})
+
 @api.route('/chart' , methods = ["GET", "POST"])
 def chart():
-    pass
+    userEmail = session['userEmail']
+    if request.method == 'GET':
+        loadtime = LoadTime
+        a = loadtime.loadDay(userEmail, 'Jun' , '16')
+        print(a)
+        return jsonify({'result': 'success','msg':'list 연결되었습니다!' , 'timeInfo' : a })
+    
+    

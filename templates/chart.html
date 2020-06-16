@@ -22,6 +22,18 @@
 
 </head>
 <body>
+    <script>
+        var csrf_token = "{{ csrf_token() }}";
+        $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrf_token);
+        }
+        }
+        });
+    </script>
+
+    
     <div width = '300'>
     <canvas id="myChart" width="400" height="400"></canvas>
     </div>

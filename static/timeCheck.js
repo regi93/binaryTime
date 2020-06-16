@@ -42,30 +42,28 @@ function plus() {
 function minus() {
     if (Mbtn.innerText == "Start MinusTime") {
         Mbtn.innerText = 'End MinusTime';
-        
         $.ajax({
             type: "POST",
             url: "/api/v1/minustime",
             data: {
-                startTime: new Date(),
+                Time: new Date(),
                 timeType : '- Start'
-
-        },
+                },
             success:function(response){
                 if (response['result'] == 'success') {
                     alert(response['msg']);
                 }
             }
         })
+        
     } else {
         Mbtn.innerText = 'Start MinusTime';
         $.ajax({
             type: "POST",
             url: "/api/v1/minustime",
             data: {
-                startTime: new Date(),
+                Time : new Date(),
                 timeType : '- End'
-
         },
             success:function(response){
                 if (response['result'] == 'success') {
