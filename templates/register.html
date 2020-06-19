@@ -9,27 +9,27 @@
 </head>
 
 <body>
-        <h1>회원가입</h1>
+        <h1>Register</h1>
         <a href="#" onclick='window.open("login", "", "width=500, height=600", "")'>로그인</a>
             <form method="POST" >   
                 {{form.csrf_token}}
                 <div class="form-group">
-                    {{form.userEmail.label("이메일")}}
-                    {{form.userEmail(class="form-control", placeholder="이메일")}}
+                    {{form.userEmail.label("Email")}}
+                    {{form.userEmail(class="form-control", placeholder="Email")}}
                 </div>
                 <div class="form-group">
-                    {{form.userName.label("사용자 이름")}}
-                    {{form.userName(class="form-control", placeholder="사용자 이름")}}
+                    {{form.userName.label("user name")}}
+                    {{form.userName(class="form-control", placeholder="user name")}}
                 </div>
                 <div class="form-group">
-                    {{form.password.label("비밀번호")}}
-                    {{form.password(class="form-control", placeholder="비밀번호")}}
+                    {{form.password.label("password")}}
+                    {{form.password(class="form-control", placeholder="password")}}
                 </div>
                 <div class="form-group">
-                    {{form.rePassword.label("비밀번호 확인")}}
-                    {{form.rePassword(class="form-control", placeholder="비밀번호 확인")}}
+                    {{form.rePassword.label("re - password")}}
+                    {{form.rePassword(class="form-control", placeholder="re- password")}}
                 </div>
-                <button type="submit" class="btn btn-primary">제출</button>
+                <button type="submit" class="btn btn-primary">submit</button>
             </form>
             <script src="{{ url_for('static', filename='background.js') }}" > </script>
 

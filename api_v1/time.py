@@ -34,10 +34,17 @@ def minustime():
 @api.route('/chart' , methods = ["GET", "POST"])
 def chart():
     userEmail = session['userEmail']
+    loadtime = LoadTime
     if request.method == 'GET':
-        loadtime = LoadTime
         a = loadtime.loadDay(userEmail, 'Jun' , '16')
-        print(a)
         return jsonify({'result': 'success','msg':'list 연결되었습니다!' , 'timeInfo' : a })
-    
+
+    elif request.method == 'POST':
+        date = request.form['date']
+        day = loadtime.NumDateToStr(date)[0]
+        month = loadtime.NumDateToStr(date)[1]
+        a = loadtime.loadDay(userEmail, month , day)
+        print(a)
+        return jsonify({'result': 'success','msg':'GET!!' , 'timeInfo' : a})
+
     

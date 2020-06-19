@@ -67,6 +67,7 @@ class SaveTime:
 
 class LoadTime():
     def loadDay(userEmail , month, day):
+        print("models'",userEmail, month , day)
         loadPlus = list(db.plus.find({'$and' : [{'userEmail':userEmail},{'month' : month},{'day':day} ]} , {'_id':0}))
         sumPlus = 0
         for i in loadPlus:
@@ -74,8 +75,6 @@ class LoadTime():
             sumPlus += int(h)
             sumPlus += float(m)/60
             sumPlus +=  float(s)/3600
-                
-#60초 1분 
         restOfTime = 24
         loadMinus = list(db.minus.find({'$and' : [{'userEmail':userEmail},{'month' : month},{'day':day} ]} , {'_id':0}))
         sumMinus = 0
@@ -88,7 +87,21 @@ class LoadTime():
         zeroTime = 9
         restOfTime -= (sumMinus + sumPlus + zeroTime)
         return sumPlus , sumMinus , zeroTime , restOfTime
-        
+    def todaysDate():
+        today = str(datetime.today())
+        arrMonth = ['Jan', 'Feb' , 'Mar' , 'Apr' , 'May' , 'Jun' , 'Jul' ,'Aug' ,'Sep' ,'Oct' ,'Nov' ,'Dec']
+        todayDay = today[8:10]
+        todayMonth = arrMonth[int(today[5:7])-1]
+        return [todayDay , todayMonth]
+
+    def NumDateToStr(numDate):
+        arrMonth = ['Jan', 'Feb' , 'Mar' , 'Apr' , 'May' , 'Jun' , 'Jul' ,'Aug' ,'Sep' ,'Oct' ,'Nov' ,'Dec']
+        month, day, year = map(int, numDate.split('/'))
+        month = arrMonth[month - 1]
+        return [str(day) , month]
+
+
+
 
 
 

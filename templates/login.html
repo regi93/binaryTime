@@ -9,12 +9,12 @@
     <form method="POST" >   
         {{form.csrf_token}}
         <div class="form-group">
-            {{form.userEmail(class="form-control", placeholder="이메일")}}
+            {{form.userEmail(class="form-control", placeholder="Email")}}
         </div>
         <div class="form-group">
-            {{form.password(class="form-control", placeholder="비밀번호")}}
+            {{form.password(class="form-control", placeholder="password")}}
         </div>
-        <button type="submit">로그인</button>
+        <button type="submit">Login</button>
 
         {% if form.password.errors %}
         <strong>{{form.password.errors.0}}</strong>
