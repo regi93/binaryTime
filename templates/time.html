@@ -5,19 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME</title>
-    <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">
 
-<!-- CHART_JS -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+    <!-- <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet"> -->
+    <link href="{{ url_for('static', filename='timeline.css') }}" rel="stylesheet">
 
-<!-- JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 
 </head>
@@ -30,25 +31,23 @@
     <button id = "Pbtn" onclick="plus()">Start PlusTime</button>
     <button id = "Mbtn" onclick="minus()">Start MinusTime</button>
     </div>
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">내용</th>
-            <th scope="col">시간</th>
-          </tr>
-        </thead>
-        <tbody id = 'table'>
-          <!-- <tr> -->
-            <!-- <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td> -->
-          <!-- </tr> -->
-          
-        </tbody>
-    </table>
 
 
+
+    <div class="timeline">
+        <!-- <input type="checkbox" id="event-1"/>
+        <section>
+          <label for="event-1">
+            <span class="date">July 2018</span>
+            Life Event 1
+          </label>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea officiis at eaque possimus cumque, earum dolores expedita accusantium unde adipisci facilis voluptate optio sed, animi ex error. Inventore, nobis fuga!</p>
+        </section> -->
+      </div>
+
+      
+      <input type="text">
+      <input type="text">
 
 
     <script>
@@ -61,10 +60,9 @@
         }
         });
     </script>
-    <script src="{{ url_for('static', filename='background.js') }}" > </script>
+    <!-- <script src="{{ url_for('static', filename='background.js') }}" > </script> -->
     <script src="{{ url_for('static', filename='timecheck.js') }}" > </script>
     <script src="{{ url_for('static', filename='clock.js') }}" > </script>
-    <script src="{{ url_for('static', filename='listing.js') }}" > </script>
 
 
 </body>

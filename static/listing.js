@@ -33,6 +33,21 @@ function loadlist() {
     input.addEventListener('submit', article);
     
 }
+    // 삭제
+    // 삭제
+
+    // 삭제
+
+    // 삭제
+
+    // 삭제
+
+    // 삭제
+
+    // 삭제
+
+    // 삭제
+
     
 let input = document.querySelector('input');
 function article() {

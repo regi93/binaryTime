@@ -57,11 +57,13 @@ def timelist():
     loadtime = LoadTime
     if request.method == 'GET':
         todayMonth = loadtime.todaysDate()[1]
-        # todayDay = loadtime.todaysDate()[0]
-        todayDay = '16'
-        plist = list(db.plus.find({"$and" : [{'userEmail':userEmail},{'day':todayDay},{'month':todayMonth}]},{'_id' : 0}))
-        mlist = list(db.minus.find({"$and" : [{'userEmail':userEmail},{'day':todayDay},{'month':todayMonth}]}, {'_id' : 0}))
-        return jsonify({'result': 'success','msg':'list 연결되었습니다!' , 'plist' : plist , 'mlist' : mlist })
+        todayDay = loadtime.todaysDate()[0]
+        # todayDay = '16'
+        timeList = []
+        timeList.extend(list(db.plus.find({"$and" : [{'userEmail':userEmail},{'day':todayDay},{'month':todayMonth}]},{'_id' : 0})))
+        timeList.extend(db.minus.find({"$and" : [{'userEmail':userEmail},{'day':todayDay},{'month':todayMonth}]}, {'_id' : 0}))
+        timeList.sort(key=lambda x:x['startTime'])
+        return jsonify({'result': 'success','msg':'list 연결되었습니다!' , 'timeList' : timeList })
 
     elif request.method == 'POST':
         return jsonify({'result': 'success','msg':'GET!!' , 'timeInfo' : a})
