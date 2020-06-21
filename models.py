@@ -101,6 +101,7 @@ class LoadTime():
         return [str(day) , month]
 
 
+    def TimeName(input):
 
 
 

@@ -36,7 +36,10 @@ def chart():
     userEmail = session['userEmail']
     loadtime = LoadTime
     if request.method == 'GET':
-        a = loadtime.loadDay(userEmail, 'Jun' , '16')
+        todayMonth = loadtime.todaysDate()[1]
+        todayDay = loadtime.todaysDate()[0]
+
+        a = loadtime.loadDay(userEmail, todayMonth , todayDay)
         return jsonify({'result': 'success','msg':'list 연결되었습니다!' , 'timeInfo' : a })
 
     elif request.method == 'POST':
@@ -48,3 +51,17 @@ def chart():
         return jsonify({'result': 'success','msg':'GET!!' , 'timeInfo' : a})
 
     
+@api.route('/timelist' , methods = ["GET", "POST"])
+def timelist():
+    userEmail = session['userEmail']
+    loadtime = LoadTime
+    if request.method == 'GET':
+        todayMonth = loadtime.todaysDate()[1]
+        # todayDay = loadtime.todaysDate()[0]
+        todayDay = '16'
+        plist = list(db.plus.find({"$and" : [{'userEmail':userEmail},{'day':todayDay},{'month':todayMonth}]},{'_id' : 0}))
+        mlist = list(db.minus.find({"$and" : [{'userEmail':userEmail},{'day':todayDay},{'month':todayMonth}]}, {'_id' : 0}))
+        return jsonify({'result': 'success','msg':'list 연결되었습니다!' , 'plist' : plist , 'mlist' : mlist })
+
+    elif request.method == 'POST':
+        return jsonify({'result': 'success','msg':'GET!!' , 'timeInfo' : a})

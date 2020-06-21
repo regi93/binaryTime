@@ -30,8 +30,23 @@
     <button id = "Pbtn" onclick="plus()">Start PlusTime</button>
     <button id = "Mbtn" onclick="minus()">Start MinusTime</button>
     </div>
-
-
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">내용</th>
+            <th scope="col">시간</th>
+          </tr>
+        </thead>
+        <tbody id = 'table'>
+          <!-- <tr> -->
+            <!-- <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td> -->
+          <!-- </tr> -->
+          
+        </tbody>
+    </table>
 
 
 
@@ -49,5 +64,8 @@
     <script src="{{ url_for('static', filename='background.js') }}" > </script>
     <script src="{{ url_for('static', filename='timecheck.js') }}" > </script>
     <script src="{{ url_for('static', filename='clock.js') }}" > </script>
+    <script src="{{ url_for('static', filename='listing.js') }}" > </script>
+
+
 </body>
 </html>
