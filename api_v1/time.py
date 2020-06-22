@@ -47,11 +47,10 @@ def chart():
         day = loadtime.NumDateToStr(date)[0]
         month = loadtime.NumDateToStr(date)[1]
         a = loadtime.loadDay(userEmail, month , day)
-        print(a)
         return jsonify({'result': 'success','msg':'GET!!' , 'timeInfo' : a})
 
     
-@api.route('/timelist' , methods = ["GET", "POST"])
+@api.route('/timelist' , methods = ["GET", "POST", "DEL"])
 def timelist():
     userEmail = session['userEmail']
     loadtime = LoadTime
@@ -66,4 +65,13 @@ def timelist():
         return jsonify({'result': 'success','msg':'list 연결되었습니다!' , 'timeList' : timeList })
 
     elif request.method == 'POST':
-        return jsonify({'result': 'success','msg':'GET!!' , 'timeInfo' : a})
+        article = request.form['article']
+        time = request.form['time']
+        timeType = request.form['timeType']
+        if timeType == 'blueList':
+            timeType = '+ Start'
+        else:
+            timeType = '- Start'
+        startTime, endTime = time.split(' ~ ')
+        SaveTime.saveArticle(userEmail ,timeType, article, startTime ,endTime)
+        return jsonify({'result': 'success','msg':'WHAT!!' })

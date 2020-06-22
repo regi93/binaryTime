@@ -35,6 +35,7 @@
 
 
     <div class="timeline">
+        <form method="post" onsubmit="articleInput()">
         <!-- <input type="checkbox" id="event-1"/>
         <section>
           <label for="event-1">
@@ -43,12 +44,8 @@
           </label>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea officiis at eaque possimus cumque, earum dolores expedita accusantium unde adipisci facilis voluptate optio sed, animi ex error. Inventore, nobis fuga!</p>
         </section> -->
+    </form>
       </div>
-
-      
-      <input type="text">
-      <input type="text">
-
 
     <script>
         var csrf_token = "{{ csrf_token() }}";

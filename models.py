@@ -62,12 +62,18 @@ class SaveTime:
         tdelta = datetime.strptime(endTime, '%H:%M:%S') - datetime.strptime(startTime, '%H:%M:%S')
         if tdelta.days < 0 :
             tdelta = timedelta(days=0, seconds=tdelta.seconds, microseconds=tdelta.microseconds)
-
         return str(tdelta)
+    
+    def saveArticle(userEmail ,timeType, article, startTime, endTime):
+        if '+' in timeType:
+            db.plus.update_one({"$and": [{'endTime':endTime}, {'userEmail':userEmail}, {"startTime":startTime}]},
+                {'$set':{'article':article}})
+        else : 
+            db.minus.update_one({"$and": [{'endTime':endTime}, {'userEmail':userEmail}, {"startTime":startTime}]},
+                {'$set':{'article':article}})
 
 class LoadTime():
     def loadDay(userEmail , month, day):
-        print("models'",userEmail, month , day)
         loadPlus = list(db.plus.find({'$and' : [{'userEmail':userEmail},{'month' : month},{'day':day} ]} , {'_id':0}))
         sumPlus = 0
         for i in loadPlus:
@@ -99,7 +105,6 @@ class LoadTime():
         month, day, year = map(int, numDate.split('/'))
         month = arrMonth[month - 1]
         return [str(day) , month]
-
 
 
 
