@@ -1,37 +1,32 @@
-@import url("https://fonts.googleapis.com/css?family=Lora:400,400i,700");
  ::selection {
 	 background: #eee;
-
-}
- body {
-	 font-family: 'Lora', sans-serif;
 }
  .timeline {
 	 box-sizing: border-box;
 	 padding: 2rem 2rem 2rem 6rem;
      margin: 2rem auto;
-     
 	 max-width: 800px;
 	 /* background: #eee; */
 	 position: relative;
 }
  .timeline input[type="checkbox"] {
+     display:none;
 	 position: absolute;
 	 opacity: 0.1;
 }
  .timeline::before {
 	 content: '';
 	 position: absolute;
-	 left: 4em;
-	 width: 2px;
-	 top: 2rem;
-	 bottom: 2rem;
-	 background-color: black;
+	 left: 30px;
+	 width: 8px;
+	 top: 10px;
+	 bottom: 3rem;
+	 background-color: #48dbfb;
 	 display: inline-block;
 }
  .timeline section {
 	 position: relative;
-	 padding-bottom: 8em;
+	 padding-bottom: 4em;
 }
  .timeline section label {
 	 cursor: pointer;
@@ -60,7 +55,7 @@
 	 top: 0;
 	 left: calc(-2.5em - 1px);
      width: 1.25em;
-     background-color: yellowgreen;
+     background-color: blue;
 	 height: 1.25em;
 	 box-shadow: 0 0 0 0.375em inset white, 2px 2px 2px rgba(0, 0, 0, 0.5);
 	 transform: rotate(405deg);

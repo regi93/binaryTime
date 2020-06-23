@@ -1,0 +1,40 @@
+  .ball {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    /* background-color: blue; */
+
+    border-radius: 50%;
+    margin: 200px auto 0;
+    animation: ball 300ms cubic-bezier(0.165, 0.840, 0.440, 1.000) infinite alternate;
+    animation-delay: 0;
+  }
+  .shadow {
+    width: 50px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
+    display:block;
+    margin: 0 auto;
+    position: relative;
+    top: -10px;
+    opacity: 0.7;
+     animation: shadow 300ms cubic-bezier(0.165, 0.840, 0.440, 1.000) infinite alternate;
+    animation-delay: 0;
+  }
+  #blue{
+    background-color: blue;
+  }
+  #red{
+    background-color: red;
+  }
+  
+  
+  @keyframes ball {
+    0%{transform: translateY(0px);}
+    100% {transform: translateY(-150px);}
+  }
+  @keyframes shadow {
+    0%{transform: scale(.5);}
+    100% {transform: scale(1.1); opacity:.1;}
+  }

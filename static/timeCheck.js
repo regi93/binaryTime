@@ -1,12 +1,10 @@
-
-// window.onload;
-
-const Pbtn = document.querySelector('#Pbtn'),
-Mbtn = document.querySelector('#Mbtn');
+const ball = document.querySelector(".ball"),
+    shadow = document.querySelector(".shadow"),
+    Pbtn = document.querySelector('#Pbtn'),
+    Mbtn = document.querySelector('#Mbtn');
 
 let plusStatus = 'close',
-minusStatus = 'close'; // open or close
-
+    minusStatus = 'close'; // open or close
 
 // function articleDel(timeColor, cnt) {
 //     $.ajax({
@@ -45,6 +43,9 @@ function articleInput( timeColor, cnt) {
     })
 }
 function plus() {
+    ball.id = 'blue'
+    shadow.id = 'blue'
+        
     if (Pbtn.innerText == "Start PlusTime") {
         plusStatus = 'open';
         Pbtn.innerText = 'End PlusTime';
@@ -84,6 +85,8 @@ function plus() {
 }
 
 function minus() {
+    ball.id = 'red'
+    shadow.id = 'red'
     if (Mbtn.innerText == "Start MinusTime") {
         Mbtn.innerText = 'End MinusTime';
         minusStatus = 'open';

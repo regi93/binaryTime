@@ -12,6 +12,7 @@ def plustime():
         userEmail = session['userEmail']
         save = SaveTime
         save.saveTime(userEmail , time, timeType)
+        print("$$POST$$요청")
         if 'Start' in timeType :
             return jsonify({'result':'success','msg':'PlusTime 시작'})
         elif 'End' in timeType :

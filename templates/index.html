@@ -3,6 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1"> -->
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no" name="viewport" />
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Color of time</title>
@@ -15,7 +18,32 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <!--원본 <link href="css/styles.css" rel="stylesheet" /> -->
         <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
-
+<script>
+var csrf_token = "{{ csrf_token() }}";
+$.ajaxSetup({
+beforeSend: function(xhr, settings) {
+if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+xhr.setRequestHeader("X-CSRFToken", csrf_token);
+}
+}
+});</script>        
+<style>
+html, body {
+max-width: 100%;
+overflow-x: hidden;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+</style>
+<!-- myct -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+crossorigin="anonymous"></script>
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -25,7 +53,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Projects</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/time">Time record</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">Contact</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/chart">chart</a></li>
 
@@ -36,7 +64,9 @@
         <!--  -->
         
         {%if userName%}
-        <h1> Hello, {{userName}}</h1> 
+        <h1> Hello, {{userName}}</h1>
+        {%else%}
+        <h1> GET LOGIN</h1>
         {%endif%}
         <div class="js-clock">
             <h1>Time</h1>
@@ -46,9 +76,9 @@
         <header class="masthead">
             <div class="container d-flex h-100 align-items-center">
                 <div class="mx-auto text-center">
-                    <h1 class="mx-auto my-0 text-uppercase">Grayscale</h1>
-                    <h2 class="text-white-50 mx-auto mt-2 mb-5">A free, responsive, one page Bootstrap theme created by Start Bootstrap.</h2>
-                    <a class="btn btn-primary js-scroll-trigger" href="/register">Get Started</a>
+                    <h1 class="mx-auto my-0 text-uppercase">Color of time</h1>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">인지하지 못하는 사이, 무의미하게 흐르는 시간을 기록해보세요.</h2>
+                    <a class="btn btn-primary js-scroll-trigger" href="/register">Get start</a>
                 </div>
             </div>
         </header>
@@ -56,11 +86,24 @@
         <section class="about-section text-center" id="about">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <h2 class="text-white mb-4">Built with Bootstrap 4</h2>
-                        <p class="text-white-50">Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
-                    </div>
+                    <div class="col-lg-auto mx-auto">
+                        <h1 class="text-white mb-4">Today's your timeline</h1>
+    <div class="timeline"><form method="post" onsubmit="articleInput()"></form></div>
                 </div>
+
+<!-- c -->
+<div class="row">
+<div class="col-lg-auto mx-auto">
+
+    <!-- BALL -->
+    <div class="ball" id=''></div><span class="shadow" id='' ></span>
+    <!-- BALL -->
+<button id = "Pbtn" onclick="plus()">Start PlusTime</button>
+<button id = "Mbtn" onclick="minus()">Start MinusTime</button>
+</div>
+</div>
+<!-- c -->
+                        <!-- <p class="text-white-50">Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p> -->
                 <img class="img-fluid" src="assets/img/ipad.png" alt="" />
             </div>
         </section>
@@ -161,11 +204,37 @@
                 </div>
             </div>
         </section>
-        <!-- local JS/CSS -->
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- yj JS/CSS -->
         <script src="{{ url_for('static', filename='clock.js') }}" > </script>
         <script src="{{ url_for('static', filename='background.js') }}" > </script>
+        <script src="{{ url_for('static', filename='timecheck.js') }}" > </script>
         <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">
-
+        <link href="{{ url_for('static', filename='ball.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='timeline.css') }}" rel="stylesheet">
+        
         <!-- Footer-->
         <footer class="footer bg-black small text-center text-white-50"><div class="container">Copyright © Your Website 2020</div></footer>
         <!-- Bootstrap core JS-->
