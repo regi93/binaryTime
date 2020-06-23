@@ -12,7 +12,6 @@ def plustime():
         userEmail = session['userEmail']
         save = SaveTime
         save.saveTime(userEmail , time, timeType)
-        print("$$POST$$요청")
         if 'Start' in timeType :
             return jsonify({'result':'success','msg':'PlusTime 시작'})
         elif 'End' in timeType :
@@ -55,15 +54,20 @@ def chart():
 def timelist():
     userEmail = session['userEmail']
     loadtime = LoadTime
+
     if request.method == 'GET':
         todayMonth = loadtime.todaysDate()[1]
         todayDay = loadtime.todaysDate()[0]
-        # todayDay = '16'
         timeList = []
         timeList.extend(list(db.plus.find({"$and" : [{'userEmail':userEmail},{'day':todayDay},{'month':todayMonth}]},{'_id' : 0})))
         timeList.extend(db.minus.find({"$and" : [{'userEmail':userEmail},{'day':todayDay},{'month':todayMonth}]}, {'_id' : 0}))
         timeList.sort(key=lambda x:x['startTime'])
-        return jsonify({'result': 'success','msg':'list 연결되었습니다!' , 'timeList' : timeList })
+        status = loadtime.NowStatus(userEmail)
+        startTime = 0
+
+        if len(status) != 1:
+            startTime = status[1]
+        return jsonify({'result': 'success','msg':'list 연결되었습니다!' , 'timeList' : timeList ,'status' : status[0] ,'startTime' : startTime})
 
     elif request.method == 'POST':
         article = request.form['article']

@@ -106,6 +106,19 @@ class LoadTime():
         month = arrMonth[month - 1]
         return [str(day) , month]
 
+    def NowStatus(userEmail):
+        plusStatus = list(db.plus.find({'userEmail':userEmail},{'_id':0}).sort('_id', -1).limit(1))
+        minusStatus = list(db.minus.find({'userEmail':userEmail},{'_id':0}).sort('_id', -1).limit(1))
+        if "endTime" not in plusStatus[0]:
+            startTime = plusStatus[0]['startTime']
+            return ["plus" , startTime]
+        elif "endTime" not in minusStatus[0]:
+            startTime = minusStatus[0]['startTime']
+
+            return ["minus" , startTime]
+        else:
+            return "zero"
+
 
 
 

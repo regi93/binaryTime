@@ -8,9 +8,7 @@ function setClock(){
     var s = today.getSeconds();    
     clockContainer.innerHTML=`${h}:${m}:${s}`
     setTimeout(setClock, 500);    
-if (second < 10) {
-    second = "0" + second;
-}
+
 }
 
 

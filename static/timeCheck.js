@@ -1,10 +1,12 @@
 const ball = document.querySelector(".ball"),
     shadow = document.querySelector(".shadow"),
     Pbtn = document.querySelector('#Pbtn'),
-    Mbtn = document.querySelector('#Mbtn');
+    Mbtn = document.querySelector('#Mbtn')
+    TIMER = document.getElementById('timer')
 
 let plusStatus = 'close',
-    minusStatus = 'close'; // open or close
+    minusStatus = 'close',
+    startTime;
 
 // function articleDel(timeColor, cnt) {
 //     $.ajax({
@@ -20,7 +22,31 @@ let plusStatus = 'close',
 //         }
 //     })
 // }
+timer = setInterval(function(){
+    var today = new Date();
+    var h = today.getHours() 
+    var sh = parseInt(startTime.split(':')[0]); 
+    var m = today.getMinutes() 
+    var sm = parseInt(startTime.split(':')[1]);
+    var s = today.getSeconds();
+    var ss = parseInt(startTime.split(':')[2]);
     
+    let stime = sh*3600 +  sm*60 + ss
+    let ntime = h*3600 +  m*60 + s
+
+    if (stime > ntime) {
+        
+    }
+    ntime -= stime
+    console.log(h,m,s)
+    h = Math.floor(ntime/3600);
+    console.log(ntime)
+    m = Math.floor((ntime-h*3600)/60)
+    console.log(ntime)
+    s = ntime - h*3600 - m*60
+    console.log(ntime)
+    TIMER.innerHTML = `${h > 10 ? h : `0${h}`}:${m > 10 ? m : `0${m}`}:${s > 10 ? s : `0${ s }`}`;
+}, 1000);
 
 function articleInput( timeColor, cnt) {
     let article = document.querySelector(`.aInput${cnt}`).value;
@@ -124,13 +150,30 @@ function minus() {
         })
     }
 }
-function loadlist() {
 
+function loadlist() {
     $.ajax({
         type: "GET",
         url: "/api/v1/timelist",
         data: {},
         success: function (response) {
+            if (response['status'] == "plus") {
+                startTime = response['startTime']
+                Mbtn.innerText = 'Start MinusTime';
+                Pbtn.innerText = 'End PlusTime';
+                ball.id = 'blue'
+                shadow.id = 'blue'
+                timer();
+            } else if (response['status'] == 'minus') {
+                startTime = response['startTime']
+                Mbtn.innerText = 'End MinusTime';
+                Pbtn.innerText = 'Start PlusTime';
+                ball.id = 'red'
+                shadow.id = 'red'
+                timer();
+
+            }
+
             if (response['result'] == 'success') {
                 alert(response['msg']);
                 let timeList = response['timeList'];

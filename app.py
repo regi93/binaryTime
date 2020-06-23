@@ -7,11 +7,11 @@ from api_v1 import api as api_v1
 
 app = Flask(__name__)
 app.register_blueprint(api_v1 , url_prefix='/api/v1')
-# ####################################
 
 @app.route('/time')
 def time():
     return render_template('time.html')
+    
 @app.route('/user/<w>',methods=["POST","GET"])
 def login(w):
     if w == 'login':
