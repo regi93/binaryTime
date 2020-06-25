@@ -105,16 +105,26 @@ class LoadTime():
         month, day, year = map(int, numDate.split('/'))
         month = arrMonth[month - 1]
         return [str(day) , month]
+    def DelList(userEmail ,timeType, startTime, endTime):
+        if '+' in timeType:
+            db.plus.delete_one({"$and": [{'endTime':endTime}, {'userEmail':userEmail}, {"startTime":startTime}]},{})
+
+        else :
+            db.minus.delete_one({"$and": [{'endTime':endTime}, {'userEmail':userEmail}, {"startTime":startTime}]},{})
+
+
 
     def NowStatus(userEmail):
         plusStatus = list(db.plus.find({'userEmail':userEmail},{'_id':0}).sort('_id', -1).limit(1))
         minusStatus = list(db.minus.find({'userEmail':userEmail},{'_id':0}).sort('_id', -1).limit(1))
-        if "endTime" not in plusStatus[0]:
+        print("P:",plusStatus)
+        print("M:",minusStatus)
+        
+        if (len(plusStatus) !=0) and ("endTime" not in plusStatus[0]):
             startTime = plusStatus[0]['startTime']
             return ["plus" , startTime]
-        elif "endTime" not in minusStatus[0]:
+        elif (len(minusStatus) !=0) and ("endTime" not in minusStatus[0]):
             startTime = minusStatus[0]['startTime']
-
             return ["minus" , startTime]
         else:
             return "zero"

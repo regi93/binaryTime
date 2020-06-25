@@ -8,9 +8,6 @@ from api_v1 import api as api_v1
 app = Flask(__name__)
 app.register_blueprint(api_v1 , url_prefix='/api/v1')
 
-@app.route('/time')
-def time():
-    return render_template('time.html')
     
 @app.route('/user/<w>',methods=["POST","GET"])
 def login(w):
@@ -46,7 +43,10 @@ def hello():
     if userEmail:
         userName = MyUser.login(userEmail)[1]
         return render_template('index.html',userName = userName)
-    return "do login"
+
+    return render_template('index.html')
+
+
 
 @app.route('/chart')
 def chart():
@@ -58,4 +58,4 @@ if __name__ == "__main__":
     csrf.init_app(app)
     csrf.exempt(api_v1)
 
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='localhost', port=5000, debug=True)

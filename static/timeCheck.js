@@ -8,20 +8,25 @@ let plusStatus = 'close',
     minusStatus = 'close',
     startTime;
 
-// function articleDel(timeColor, cnt) {
-//     $.ajax({
-//         type: "DEL",
-//         url: "/api/v1/timelist/del",
-//         data: {
-//             cnt: cnt,
-//     },
-//         success:function(response){
-//             if (response['result'] == 'success') {
-//                 alert(response['msg']);
-//             }
-//         }
-//     })
-// }
+function articleDel(timeColor, cnt) {
+let time = document.querySelector(`#time${cnt}`).textContent;
+    $.ajax({
+        type: "DEL",
+        url: "/api/v1/timelist",
+        data: {
+            timeType : timeColor,
+            time : time,
+    },
+        success:function(response){
+            if (response['result'] == 'success') {
+                alert(response['msg']);
+                loadlist();
+            }
+        }
+    })
+}
+
+
 timer = setInterval(function(){
     var today = new Date();
     var h = today.getHours() 
@@ -30,7 +35,7 @@ timer = setInterval(function(){
     var sm = parseInt(startTime.split(':')[1]);
     var s = today.getSeconds();
     var ss = parseInt(startTime.split(':')[2]);
-    
+    console.log("@@@@")
     let stime = sh*3600 +  sm*60 + ss
     let ntime = h*3600 +  m*60 + s
 
@@ -150,6 +155,7 @@ function minus() {
         })
     }
 }
+    
 
 function loadlist() {
     $.ajax({
@@ -180,6 +186,7 @@ function loadlist() {
                 let cnt = 1;
                 let timeColor = '';
                 let article = '';
+                $('.timeline').empty();
                 timeList.forEach(element => {
 
                     if (element.timeType == '+ Start') {
@@ -192,13 +199,7 @@ function loadlist() {
                     } else {
                         article = element.article;
                     }
-                    // if (element.endTime == undefined) {
-                    //     if (element.timeType == '+ Start') {
-                    //         plusStatus = 'open';
-                    //     } else {
-                    //         minusStatus = 'close';
-                    //     }
-                    // }
+
                     $('.timeline').append(`<input type="checkbox" class='${timeColor}' id="event-${cnt}"/>
                         <section>
                         <label for="event-${cnt}">
@@ -207,7 +208,8 @@ function loadlist() {
                         </label>
                         <p>${"지속시간 : " + element.duration}
                         <br>
-                        <input type="text" class = "aInput${cnt}" >
+                        <input style = "color : white;" placeholder = "이벤트 입력"  type="text" class = "aInput${cnt}" >
+                        <br>
                         <button type = 'submit' onclick="articleInput( '${timeColor}', '${cnt}')">입력</button>
                         <button type = 'submit' onclick="articleDel( '${timeColor}', '${cnt}')">삭제</button>
                         </p>

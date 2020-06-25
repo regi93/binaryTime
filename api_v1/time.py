@@ -80,3 +80,15 @@ def timelist():
         startTime, endTime = time.split(' ~ ')
         SaveTime.saveArticle(userEmail ,timeType, article, startTime ,endTime)
         return jsonify({'result': 'success','msg':'WHAT!!' })
+
+    elif request.method == "DEL":
+        time = request.form['time']
+        timeType = request.form['timeType']
+        if timeType == 'blueList':
+            timeType = '+ Start'
+        else:
+            timeType = '- Start'
+        startTime, endTime = time.split(' ~ ')
+        LoadTime.DelList(userEmail ,timeType, startTime ,endTime)
+        return jsonify({'result': 'success','msg':'DEL돼누!!' })
+

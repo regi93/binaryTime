@@ -19,9 +19,10 @@ function getTime() {
     const minutes = date.getMinutes();
     const hours = date.getHours();
     var second = date.getSeconds();
-    clockTitle.innerText = `${hours > 10 ? hours : `0${hours}`}:${
-        minutes > 10 ? minutes : `0${minutes}`}:${
-        second > 10 ? second : `0${ second }`}`;
+    
+    clockTitle.innerText = `${String(hours).length > 1 ? hours : `0${hours}`}:${
+        String(minutes).length > 1  ? minutes : `0${minutes}`}:${
+            String(second).length > 1 ? second : `0${ second }`}`;
 }
 
 function init() {
