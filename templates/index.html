@@ -14,14 +14,16 @@
         <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
         <!-- CHART JS -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
-
+        <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <!--원본 <link href="css/styles.css" rel="stylesheet" /> -->
         <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
-<script>
+<!-- <script>
 var csrf_token = "{{ csrf_token() }}";
 $.ajaxSetup({
 beforeSend: function(xhr, settings) {
@@ -29,7 +31,7 @@ if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
 xhr.setRequestHeader("X-CSRFToken", csrf_token);
 }
 }
-});</script>        
+});</script>         -->
 <style>
 html, body {
 max-width: 100%;
@@ -55,23 +57,17 @@ crossorigin="anonymous"></script>
                 <a class="navbar-brand js-scroll-trigger" href="#page-top">Color of time</a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i class="fas fa-bars"></i></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">How to use</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Time record</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">asdfasdf</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/chart">chart</a></li>
-
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">View chart</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/logout">{%if userName%}Logout{%else%}Login{%endif%}</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!--  -->
         
-        {%if userName%}
-        <h1> Hello, {{userName}}</h1>
-        {%else%}
-        <script>alert("로그인이 필요합니다.")</script>
-        <h1> GET LOGIN</h1>
-        {%endif%}
+        
         
     
         <!-- Masthead-->
@@ -81,11 +77,19 @@ crossorigin="anonymous"></script>
                     <div class="js-clock">
                         <h1 class="mx-auto my-0 text-uppercase">TIME</h1>
                     </div>
-                    <h2 class="text-white-50 mx-auto mt-2 mb-5">시간을 기록해보세요.</h2>
-                    <a class="btn btn-primary js-scroll-trigger" href="/user/register">Get start</a>
+                    
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">인지하지 않으면 그냥 흘러가는 시간을 기록해보세요.</h2>
+                    {%if userName%}
+        <h3>{{userName}}</h3>
+            {%else%}
+            <h5> 로그인 후에 사용 가능합니다.</h5>
+            {%endif%}
+                    <a class="btn btn-primary js-scroll-trigger" href="/user/register">Login</a>
                 </div>
 <!-- </div> -->
         </header>
+
+        
         <!-- About-->
         <section class="about-section text-center" id="about">
             <div class="container">
@@ -105,43 +109,84 @@ crossorigin="anonymous"></script>
 
         
 <div id = 'timer'></div>
+<p style = "color: #718093; font-size :1rem">Plustime : 긍적적, 자기계발 시간 Minustime : 부정적, 낭비/소모적 시간</p>
+
 <button class="button button2"  id = "Pbtn" onclick="plus()">Start PlusTime</button>
 <button class="button button3" id = "Mbtn" onclick="minus()">Start MinusTime</button>
 </div>
 </div>
-<!-- c -->
-                        <!-- <p class="text-white-50">Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p> -->
-
                 <img class="img-fluid" src="{{ url_for('static', filename='images/ipad.png') }}" alt="" />
             </div>
         </section>
         <!-- Projects-->
-        <section class="projects-section bg-light" id="projects">
+
+
+
+
+
+
+
+
+
+
+
+        <section class="about-section text-center" id="projects">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-auto mx-auto">
+                       
+
+                            <canvas id="myChart" width="600" height="600"></canvas>
+                            <span id = "chartInfo" style = "color: black;"></span>
+                        
+                        
+                            <div class="chartList" style = "color : blue;">
+            <p style = "color: #718093; font-size :1rem">시간기록이 있는 날만 버튼으로 표시됩니다. 버튼을 누르면 그날의 차트가 나타납니다.</p>
+
+                                * CHART LIST
+                            </div>
+                </div>
+
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        <section class="projects-section bg-light" >
             <div class="container">
                 <!-- Featured Project Row-->
+
+
                 <div class="row align-items-center no-gutters mb-4 mb-lg-5">
                     
-                    <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="{{ url_for('static', filename='images/bg-masthead.jpg') }}" alt="" /></div>
                     <div class="col-xl-4 col-lg-5">
                         <div class="featured-text text-center text-lg-left">
                             <h4>Shoreline</h4>
-                            <p class="text-black-50 mb-0">Grayscale is open source and MIT licensed. This means you can use it for any project - even commercial projects! Download it, customize it, and publish your website!</p>
                         </div>
                     </div>
                 </div>
                 <!-- Project One Row-->
-<!-- CHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHART -->
-<input type="text" class="form-control" id="date"placeholder="DatePicker"/>
-<button type="button" class = "btn btn-primary" onclick="getChart();">loadChart</button>
-                <div width = '300'>
-                    <canvas id="myChart" width="400" height="400"></canvas>
-                    </div>
-<!-- CHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHARTCHART -->
 
 
                 <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
                     
-                    <div class="col-lg-6"><img class="img-fluid" src="{{ url_for('static', filename='images/demo-image-01.jpg') }}" alt="" /></div>
                     <div class="col-lg-6">
                         <div class="bg-black text-center h-100 project">
                             <div class="d-flex h-100">
@@ -157,7 +202,6 @@ crossorigin="anonymous"></script>
                 <!-- Project Two Row-->
                 <div class="row justify-content-center no-gutters">
                     
-                    <div class="col-lg-6"><img class="img-fluid" src="{{ url_for('static', filename='images/demo-image-02.jpg') }}" alt="" /></div>
                     <div class="col-lg-6 order-lg-first">
                         <div class="bg-black text-center h-100 project">
                             <div class="d-flex h-100">
@@ -172,18 +216,7 @@ crossorigin="anonymous"></script>
                 </div>
             </div>
         </section>
-        <!-- Signup-->
-        <section class="signup-section" id="signup">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-10 col-lg-8 mx-auto text-center">
-                        <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
-                        <h2 class="text-white mb-5">Subscribe to receive updates!</h2>
-                        <form class="form-inline d-flex"><input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail" type="email" placeholder="Enter email address..." /><button class="btn btn-primary mx-auto" type="submit">Subscribe</button></form>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
         <!-- Contact-->
         <section class="contact-section bg-black">
             <div class="container">
@@ -194,7 +227,7 @@ crossorigin="anonymous"></script>
                                 <i class="fas fa-map-marked-alt text-primary mb-2"></i>
                                 <h4 class="text-uppercase m-0">Address</h4>
                                 <hr class="my-4" />
-                                <div class="small text-black-50">4923 Market Street, Orlando FL</div>
+                                <div class="small text-black-50"></div>
                             </div>
                         </div>
                     </div>
@@ -204,7 +237,7 @@ crossorigin="anonymous"></script>
                                 <i class="fas fa-envelope text-primary mb-2"></i>
                                 <h4 class="text-uppercase m-0">Email</h4>
                                 <hr class="my-4" />
-                                <div class="small text-black-50"><a href="#!">hello@yourdomain.com</a></div>
+                                <div class="small text-black-50"><a href="#!">hellgey777@naver.com</a></div>
                             </div>
                         </div>
                     </div>
@@ -214,7 +247,7 @@ crossorigin="anonymous"></script>
                                 <i class="fas fa-mobile-alt text-primary mb-2"></i>
                                 <h4 class="text-uppercase m-0">Phone</h4>
                                 <hr class="my-4" />
-                                <div class="small text-black-50">+1 (555) 902-8832</div>
+                                <div class="small text-black-50"></div>
                             </div>
                         </div>
                     </div>
@@ -228,17 +261,6 @@ crossorigin="anonymous"></script>
 
 
 
-</script>
-
-
-
-<script>
-const body = document.querySelector("body");
-const image = new Image();
-image.src = `static/images/10.jpg`;
-image.classList.add("bgImage");
-body.appendChild(image);
-</script>
         <!-- yj JS/CSS -->
         <script src="{{ url_for('static', filename='clock.js') }}" > </script>
         <script src="{{ url_for('static', filename='timecheck.js') }}" > </script>
@@ -247,11 +269,12 @@ body.appendChild(image);
         <link href="{{ url_for('static', filename='timeline.css') }}" rel="stylesheet">
         <link href="{{ url_for('static', filename='button.css') }}" rel="stylesheet">
         <script src="{{ url_for('static', filename='chart.js') }}" > </script>
+
         
         <!-- Footer-->
-        <footer class="footer bg-black small text-center text-white-50"><div class="container">Copyright © Your Website 2020</div></footer>
+        <footer class="footer bg-black small text-center text-white-50"><div class="container">Copyright © my first website 2020</div></footer>
         <!-- Bootstrap core JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
         <!-- Third party plugin JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
@@ -259,6 +282,18 @@ body.appendChild(image);
         <!-- 원본 <script src="js/scripts.js"></script> -->
         <script src="{{ url_for('static', filename='scripts.js') }}" > </script>
 
+
+
+
+
+        <script>
+const body = document.querySelector("body");
+const image = new Image();
+image.src = `static/images/10.jpg`;
+image.classList.add("bgImage");
+body.appendChild(image);
+
+            </script>
 
     </body>
 </html>

@@ -37,6 +37,10 @@ def login(w):
                 return redirect('/user/register')
     return render_template('login.html',form=form , mode=mode)
 
+@app.route('/logout')
+def logout():
+    session.pop('userEmail',None)
+    return redirect('/')
 @app.route('/')
 def hello():
     userEmail = session.get('userEmail', None)
@@ -58,4 +62,4 @@ if __name__ == "__main__":
     csrf.init_app(app)
     csrf.exempt(api_v1)
 
-    app.run(host='localhost', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

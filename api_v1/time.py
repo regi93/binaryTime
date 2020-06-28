@@ -36,17 +36,17 @@ def chart():
     userEmail = session['userEmail']
     loadtime = LoadTime
     if request.method == 'GET':
-        todayMonth = loadtime.todaysDate()[1]
-        todayDay = loadtime.todaysDate()[0]
-
-        a = loadtime.loadDay(userEmail, todayMonth , todayDay)
-        return jsonify({'result': 'success','msg':'list 연결되었습니다!' , 'timeInfo' : a })
+        dateList = loadtime.chartList(userEmail)
+        return jsonify({'result': 'success','msg':'list 연결되었습니다!' , 'dateList' : dateList })
 
     elif request.method == 'POST':
         date = request.form['date']
-        day = loadtime.NumDateToStr(date)[0]
-        month = loadtime.NumDateToStr(date)[1]
+        month , day= date.split("-")
+        # day = loadtime.NumDateToStr(date)[0]
+        # month = loadtime.NumDateToStr(date)[1]
+        # a = loadtime.loadDay(userEmail, month , day)
         a = loadtime.loadDay(userEmail, month , day)
+        
         return jsonify({'result': 'success','msg':'GET!!' , 'timeInfo' : a})
 
     
@@ -90,5 +90,5 @@ def timelist():
             timeType = '- Start'
         startTime, endTime = time.split(' ~ ')
         LoadTime.DelList(userEmail ,timeType, startTime ,endTime)
-        return jsonify({'result': 'success','msg':'DEL돼누!!' })
+        return jsonify({'result': 'success','msg':'삭제완료' })
 

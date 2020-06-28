@@ -26,8 +26,8 @@ let time = document.querySelector(`#time${cnt}`).textContent;
     })
 }
 
-
-timer = setInterval(function(){
+function timer(){
+    if(plusStatus == 'open' || minusStatus == 'open'){
     var today = new Date();
     var h = today.getHours() 
     var sh = parseInt(startTime.split(':')[0]); 
@@ -35,23 +35,19 @@ timer = setInterval(function(){
     var sm = parseInt(startTime.split(':')[1]);
     var s = today.getSeconds();
     var ss = parseInt(startTime.split(':')[2]);
-    console.log("@@@@")
     let stime = sh*3600 +  sm*60 + ss
     let ntime = h*3600 +  m*60 + s
-
-    if (stime > ntime) {
-        
-    }
     ntime -= stime
-    console.log(h,m,s)
     h = Math.floor(ntime/3600);
-    console.log(ntime)
     m = Math.floor((ntime-h*3600)/60)
-    console.log(ntime)
     s = ntime - h*3600 - m*60
-    console.log(ntime)
-    TIMER.innerHTML = `${h > 10 ? h : `0${h}`}:${m > 10 ? m : `0${m}`}:${s > 10 ? s : `0${ s }`}`;
-}, 1000);
+    // TIMER.innerHTML = `${h > 10 ? h : `0${h}`}:${m > 10 ? m : `0${m}`}:${s > 10 ? s : `0${ s }`}`;
+
+    TIMER.innerText = `${String(h).length > 1 ? h : `0${h}`}:${
+        String(m).length > 1  ? m : `0${m}`}:${
+            String(s).length > 1 ? s : `0${ s }`}`;
+}
+}
 
 function articleInput( timeColor, cnt) {
     let article = document.querySelector(`.aInput${cnt}`).value;
@@ -74,10 +70,10 @@ function articleInput( timeColor, cnt) {
     })
 }
 function plus() {
-    ball.id = 'blue'
-    shadow.id = 'blue'
-        
+
     if (Pbtn.innerText == "Start PlusTime") {
+        ball.id = 'blue'
+        shadow.id = 'blue'
         plusStatus = 'open';
         Pbtn.innerText = 'End PlusTime';
         $.ajax({
@@ -95,6 +91,8 @@ function plus() {
         })
         
     } else {
+        ball.id = ''
+        TIMER.innerHTML= ""
         Pbtn.innerText = 'Start PlusTime';
         plusStatus = 'close';
         $.ajax({
@@ -107,18 +105,18 @@ function plus() {
             success:function(response){
                 if (response['result'] == 'success') {
                     alert(response['msg']);
-                    loadlist();
-
                 }
             }
         })
     }
+    loadlist();
+
 }
 
 function minus() {
-    ball.id = 'red'
-    shadow.id = 'red'
     if (Mbtn.innerText == "Start MinusTime") {
+        ball.id = 'red'
+        shadow.id = 'red'
         Mbtn.innerText = 'End MinusTime';
         minusStatus = 'open';
         $.ajax({
@@ -134,8 +132,9 @@ function minus() {
                 }
             }
         })
-        
     } else {
+        ball.id = ''
+        TIMER.innerHTML= ""
         Mbtn.innerText = 'Start MinusTime';
         minusStatus = 'close';
         $.ajax({
@@ -148,12 +147,13 @@ function minus() {
             success:function(response){
                 if (response['result'] == 'success') {
                     alert(response['msg']);
-                    loadlist();
 
                 }
             }
         })
     }
+    loadlist();
+
 }
     
 
@@ -169,15 +169,14 @@ function loadlist() {
                 Pbtn.innerText = 'End PlusTime';
                 ball.id = 'blue'
                 shadow.id = 'blue'
-                timer();
+                setInterval(timer, 1000);
             } else if (response['status'] == 'minus') {
                 startTime = response['startTime']
                 Mbtn.innerText = 'End MinusTime';
                 Pbtn.innerText = 'Start PlusTime';
                 ball.id = 'red'
                 shadow.id = 'red'
-                timer();
-
+                setInterval(timer, 1000);
             }
 
             if (response['result'] == 'success') {
@@ -221,5 +220,4 @@ function loadlist() {
     })
 }
  
-
 loadlist();

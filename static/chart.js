@@ -1,52 +1,50 @@
 let Minus = 0, Plus = 0, Zero = 0, Rest = 0;
+const chartList = document.querySelector("chartList")
 
-// loadChart();
-function loadChart() {
+function loadChartList() {
         $.ajax({
             type: "GET",
             url: "/api/v1/chart",
             data: {},
             success:function(response){
                 if (response['result'] == 'success') {
-                    alert(response['msg']);
-                    Plus = parseFloat(response['timeInfo'][0]);
-                    Minus = parseFloat(response['timeInfo'][1]);
-                    Zero = parseFloat(response['timeInfo'][2]);
-                    Rest = parseFloat(response['timeInfo'][3]);
-                    console.log(response);
-                    drawChart();
+                    response["dateList"].forEach(element => {
+                        $(".chartList").append(
+                            `<button width="5%" type="button" class = "btn btn-primary" onclick = "getChart('${element}')">${element}</button>`
+                        )
+                    });
                 }}})
 }
 
-function getChart() {
-    let date = $("#date").val()
+function getChart(date) {
     $.ajax({
         type: "POST",
         url: "/api/v1/chart",
-        data: {date : date},
+        data: {date : date },
         success:function(response){
             if (response['result'] == 'success') {
-                alert(response['msg']);
+                // alert(response['msg']);
                 Plus = parseFloat(response['timeInfo'][0]);
                 Minus = parseFloat(response['timeInfo'][1]);
                 Zero = parseFloat(response['timeInfo'][2]);
                 Rest = parseFloat(response['timeInfo'][3]);
-                console.log('POST요청값',response);
 
-                drawChart();               
+                drawChart(date);               
             }}})
 }
 
 
     
-function drawChart() {
+function drawChart(date) {
     
     var ctx = document.getElementById('myChart').getContext('2d');
-    var ctx = document.getElementById('myChart');
+    // var ctx = document.getElementById('myChart');
+    $('#myChart').empty();
+    let chartInfo = document.getElementById("chartInfo")
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Minus', 'Plus', 'Zero' , 'Rest of day'],
+            labels: ['Minus time', 'Plus time', 'Zero time' , '기록되지 않은 시간'],
             datasets: [{
                 label: '# of Votes',
                 data: [Minus, Plus, Zero, Rest],
@@ -78,6 +76,8 @@ function drawChart() {
             }
         }
     });
-
+chartInfo.innerHTML = `${date}`
 
  }
+
+loadChartList();

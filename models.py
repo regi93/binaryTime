@@ -42,7 +42,6 @@ class SaveTime:
         if '+' in timeType:
             # packedTime = dict(db.plus.find_one({'userEmail':userEmail}))
             packedTime = dict(db.plus.find_one({ '$and': [ { 'userEmail' : userEmail }, { 'duration':{'$exists' : 0 }} ] }, {'_id' : 0}))
-            print('packedTime:' , packedTime)
             startTime = packedTime['startTime']
             endTime = nowTime
             packedTime['endTime'] = endTime
@@ -73,7 +72,7 @@ class SaveTime:
                 {'$set':{'article':article}})
 
 class LoadTime():
-    def loadDay(userEmail , month, day):
+    def loadDay(userEmail , month, day ):
         loadPlus = list(db.plus.find({'$and' : [{'userEmail':userEmail},{'month' : month},{'day':day} ]} , {'_id':0}))
         sumPlus = 0
         for i in loadPlus:
@@ -90,9 +89,10 @@ class LoadTime():
             sumMinus += float(m)/60
             sumMinus +=  float(s)/3600
         
-        zeroTime = 9
+        zeroTime = 8
         restOfTime -= (sumMinus + sumPlus + zeroTime)
         return sumPlus , sumMinus , zeroTime , restOfTime
+
     def todaysDate():
         today = str(datetime.today())
         arrMonth = ['Jan', 'Feb' , 'Mar' , 'Apr' , 'May' , 'Jun' , 'Jul' ,'Aug' ,'Sep' ,'Oct' ,'Nov' ,'Dec']
@@ -112,13 +112,19 @@ class LoadTime():
         else :
             db.minus.delete_one({"$and": [{'endTime':endTime}, {'userEmail':userEmail}, {"startTime":startTime}]},{})
 
+    def chartList(userEmail):
+        dateList = list(db.plus.find({'userEmail':userEmail},{'_id':0}).sort('_id', -1))
+        date = []
+        for i in dateList:
+            date.append(i['month']+ "-"+ i["day"])
+        date = set(date)
+        date = list(date)
+        return date
 
 
     def NowStatus(userEmail):
         plusStatus = list(db.plus.find({'userEmail':userEmail},{'_id':0}).sort('_id', -1).limit(1))
         minusStatus = list(db.minus.find({'userEmail':userEmail},{'_id':0}).sort('_id', -1).limit(1))
-        print("P:",plusStatus)
-        print("M:",minusStatus)
         
         if (len(plusStatus) !=0) and ("endTime" not in plusStatus[0]):
             startTime = plusStatus[0]['startTime']
@@ -130,7 +136,7 @@ class LoadTime():
             return "zero"
 
 
-
+LoadTime.chartList("abc@abc.com")
 
 
 # db.getCollection('minus').find({ $and: [ { userEmail : 'abc@abc.com' }, { duration:{$exists: true }} ] })
