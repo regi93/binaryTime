@@ -62,7 +62,7 @@ function articleInput( timeColor, cnt) {
     },
         success:function(response){
             if (response['result'] == 'success') {
-                alert(response['msg']);
+                // alert(response['msg']);
                 loadlist();
 
             }
@@ -180,7 +180,7 @@ function loadlist() {
             }
 
             if (response['result'] == 'success') {
-                alert(response['msg']);
+                // alert(response['msg']);
                 let timeList = response['timeList'];
                 let cnt = 1;
                 let timeColor = '';

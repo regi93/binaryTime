@@ -57,10 +57,9 @@ crossorigin="anonymous"></script>
                 <a class="navbar-brand js-scroll-trigger" href="#page-top">Color of time</a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i class="fas fa-bars"></i></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">How to use</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Time record</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">View chart</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/logout">{%if userName%}Logout{%else%}Login{%endif%}</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/logout">{%if userName%}Logout{%else%}{%endif%}</a></li>
                     </ul>
                 </div>
             </div>
@@ -77,7 +76,6 @@ crossorigin="anonymous"></script>
                     <div class="js-clock">
                         <h1 class="mx-auto my-0 text-uppercase">TIME</h1>
                     </div>
-                    
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">인지하지 않으면 그냥 흘러가는 시간을 기록해보세요.</h2>
                     {%if userName%}
         <h3>{{userName}}</h3>
@@ -87,6 +85,8 @@ crossorigin="anonymous"></script>
                     <a class="btn btn-primary js-scroll-trigger" href="/user/register">Login</a>
                 </div>
 <!-- </div> -->
+
+
         </header>
 
         
@@ -96,6 +96,8 @@ crossorigin="anonymous"></script>
                 <div class="row">
                     <div class="col-lg-auto mx-auto">
                         <h1 class="text-white mb-4">Today's your timeline</h1>
+                    <p style = "color: #718093; font-size :1rem">event를 클릭하여 항목을 수정할 수 있습니다.</p>
+
     <div class="timeline"><form method="post" onsubmit="articleInput()"></form></div>
                 </div>
 
@@ -137,7 +139,7 @@ crossorigin="anonymous"></script>
                     <div class="col-lg-auto mx-auto">
                        
 
-                            <canvas id="myChart" width="600" height="600"></canvas>
+                            <canvas id="myChart" width="300" height="300"></canvas>
                             <span id = "chartInfo" style = "color: black;"></span>
                         
                         
@@ -174,49 +176,7 @@ crossorigin="anonymous"></script>
                 <!-- Featured Project Row-->
 
 
-                <div class="row align-items-center no-gutters mb-4 mb-lg-5">
-                    
-                    <div class="col-xl-4 col-lg-5">
-                        <div class="featured-text text-center text-lg-left">
-                            <h4>Shoreline</h4>
-                        </div>
-                    </div>
-                </div>
-                <!-- Project One Row-->
 
-
-                <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
-                    
-                    <div class="col-lg-6">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-left">
-                                    <h4 class="text-white">Misty</h4>
-                                    <p class="mb-0 text-white-50">An example of where you can put an image of a project, or anything else, along with a description.</p>
-                                    <hr class="d-none d-lg-block mb-0 ml-0" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Project Two Row-->
-                <div class="row justify-content-center no-gutters">
-                    
-                    <div class="col-lg-6 order-lg-first">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-right">
-                                    <h4 class="text-white">Mountains</h4>
-                                    <p class="mb-0 text-white-50">Another example of a project with its respective description. These sections work well responsively as well, try this theme on a small screen!</p>
-                                    <hr class="d-none d-lg-block mb-0 mr-0" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
         <!-- Contact-->
         <section class="contact-section bg-black">
             <div class="container">

@@ -23,7 +23,6 @@ function getChart(date) {
         data: {date : date },
         success:function(response){
             if (response['result'] == 'success') {
-                // alert(response['msg']);
                 Plus = parseFloat(response['timeInfo'][0]);
                 Minus = parseFloat(response['timeInfo'][1]);
                 Zero = parseFloat(response['timeInfo'][2]);
@@ -81,3 +80,4 @@ chartInfo.innerHTML = `${date}`
  }
 
 loadChartList();
+

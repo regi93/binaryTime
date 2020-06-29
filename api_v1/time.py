@@ -9,13 +9,14 @@ def plustime():
     if request.method == "POST":
         timeType = request.form['timeType']
         time = request.form['Time']
-        userEmail = session['userEmail']
+        
+        userEmail = session.get('userEmail', None)
         save = SaveTime
         save.saveTime(userEmail , time, timeType)
         if 'Start' in timeType :
-            return jsonify({'result':'success','msg':'PlusTime 시작'})
+            return jsonify({'result':'success','msg':'Plustime 시작'})
         elif 'End' in timeType :
-            return jsonify({'result':'success','msg':'PlusTime 끝'})
+            return jsonify({'result':'success','msg':'Plustime 끝'})
 
 
 @api.route('/minustime' , methods=["GET", "POST"])
@@ -23,7 +24,7 @@ def minustime():
     if request.method == "POST":
         timeType = request.form['timeType']
         time = request.form['Time']
-        userEmail = session['userEmail']
+        userEmail = session.get('userEmail', None)
         save = SaveTime
         save.saveTime(userEmail , time, timeType)
         if 'Start' in timeType :
@@ -33,7 +34,7 @@ def minustime():
 
 @api.route('/chart' , methods = ["GET", "POST"])
 def chart():
-    userEmail = session['userEmail']
+    userEmail = session.get('userEmail', None)
     loadtime = LoadTime
     if request.method == 'GET':
         dateList = loadtime.chartList(userEmail)
@@ -52,7 +53,7 @@ def chart():
     
 @api.route('/timelist' , methods = ["GET", "POST", "DEL"])
 def timelist():
-    userEmail = session['userEmail']
+    userEmail = session.get('userEmail', None)
     loadtime = LoadTime
 
     if request.method == 'GET':
@@ -79,7 +80,7 @@ def timelist():
             timeType = '- Start'
         startTime, endTime = time.split(' ~ ')
         SaveTime.saveArticle(userEmail ,timeType, article, startTime ,endTime)
-        return jsonify({'result': 'success','msg':'WHAT!!' })
+        return jsonify({'result': 'success','msg':'입력완료' })
 
     elif request.method == "DEL":
         time = request.form['time']

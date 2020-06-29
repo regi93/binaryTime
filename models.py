@@ -1,6 +1,7 @@
 from pymongo import MongoClient 
 from datetime import datetime, timedelta
 client = MongoClient('localhost', 27017) 
+# client = MongoClient('mongodb://test:test@localhost',27017)
 db = client.dbflask
 
 class MyUser:
@@ -136,7 +137,7 @@ class LoadTime():
             return "zero"
 
 
-LoadTime.chartList("abc@abc.com")
+# LoadTime.chartList("abc@abc.com")
 
 
 # db.getCollection('minus').find({ $and: [ { userEmail : 'abc@abc.com' }, { duration:{$exists: true }} ] })
