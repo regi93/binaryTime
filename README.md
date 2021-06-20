@@ -26,7 +26,8 @@
 
 ### 회원가입 / 로그인
 
-![img](https://blog.kakaocdn.net/dn/n7coU/btqFXhf07eM/X5wgQA9JqOLiphzgmvj0G1/img.png)
+![image](https://user-images.githubusercontent.com/46234386/122665803-5d1f1980-d1e4-11eb-889f-cf6171ad0a25.png)
+
 
 
 
